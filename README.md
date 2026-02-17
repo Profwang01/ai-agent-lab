@@ -91,36 +91,45 @@ npx openclaw doctor
 npx openclaw doctor --fix   # Auto-fix detected issues
 ```
 
-## Current Status
+## Current Status (Doctor Diagnostics)
 
-### Working
+Last checked: 2026-02-17
 
-- Agent (local mode with `--local --agent main`)
-- Gateway (`ws://127.0.0.1:18789`)
-- WebChat UI
-- Anthropic Claude Opus 4.6 as primary model
-- Skills: 5 eligible, Plugins: 4 loaded
+| Component | Status | Details |
+|-----------|--------|---------|
+| Gateway | OK | `ws://127.0.0.1:18789`, mode: local |
+| Agent (main) | OK | Model: `anthropic/claude-opus-4-6` |
+| WebChat UI | OK | `http://127.0.0.1:18789/__openclaw__/canvas/` |
+| Security | OK | No channel security warnings |
+| Skills | OK | 5 eligible, 44 missing requirements |
+| Plugins | OK | 4 loaded, 32 disabled, 0 errors |
+| Memory Search | Not configured | No embedding provider set (see below) |
+| Messaging Channels | Not configured | No channel bot tokens added yet |
 
-### Not Yet Configured
+### Memory Search (TODO)
 
-- **Memory Search** — Semantic recall is currently disabled. It requires an embedding provider to function. To enable it later, pick one of the following:
+Memory Search is enabled by default but currently **not functional** because no embedding provider is configured. Semantic recall will not work until this is resolved.
 
-  ```bash
-  # Option 1: Add an OpenAI or Gemini key for embeddings
-  npx openclaw auth add --provider openai
-  # or set OPENAI_API_KEY / GEMINI_API_KEY in ~/.openclaw/openclaw.json env block
+To enable it later, pick one of the following:
 
-  # Option 2: Configure local embeddings
-  # Set agents.defaults.memorySearch.provider and local model path in config
+```bash
+# Option 1: Add an OpenAI or Gemini key for embeddings
+npx openclaw auth add --provider openai
+# or set OPENAI_API_KEY / GEMINI_API_KEY in ~/.openclaw/openclaw.json env block
 
-  # Option 3: Explicitly disable (suppress doctor warnings)
-  npx openclaw config set agents.defaults.memorySearch.enabled false
+# Option 2: Configure local embeddings
+# Set agents.defaults.memorySearch.provider and local model path in config
 
-  # Verify status
-  npx openclaw memory status --deep
-  ```
+# Option 3: Explicitly disable (suppress doctor warnings)
+npx openclaw config set agents.defaults.memorySearch.enabled false
 
-- **Messaging Channels** — No channels (Telegram, Discord, Slack, etc.) are connected yet. Add bot tokens to `~/.openclaw/openclaw.json` as needed.
+# Verify status
+npx openclaw memory status --deep
+```
+
+### Messaging Channels (TODO)
+
+No channels (Telegram, Discord, Slack, WhatsApp, etc.) are connected yet. Add bot tokens to `~/.openclaw/openclaw.json` as needed. WhatsApp uses QR code pairing and does not require a token.
 
 ## License
 
