@@ -73,11 +73,22 @@ Minimal config:
 
 ## Usage
 
+### Quick Start
+
+```bash
+# Start Gateway + ngrok in one command (Ctrl+C to stop both)
+bash start.sh
+```
+
+This launches the Gateway on port 18789 and an ngrok HTTPS tunnel for the LINE webhook. After startup, set the ngrok URL + `/line` as the Webhook URL in the LINE Developers Console.
+
+### Individual Commands
+
 ```bash
 # Run the agent locally
 npx openclaw agent --local --agent main --message "Hello"
 
-# Start the gateway
+# Start the gateway only
 npx openclaw gateway --port 18789 --verbose
 
 # Send a message via gateway
