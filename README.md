@@ -83,9 +83,44 @@ npx openclaw gateway --port 18789 --verbose
 # Send a message via gateway
 npx openclaw agent --agent main --message "Hello"
 
+# Open WebChat UI (after gateway is running)
+# Visit http://127.0.0.1:18789/__openclaw__/canvas/
+
 # Diagnostics
 npx openclaw doctor
+npx openclaw doctor --fix   # Auto-fix detected issues
 ```
+
+## Current Status
+
+### Working
+
+- Agent (local mode with `--local --agent main`)
+- Gateway (`ws://127.0.0.1:18789`)
+- WebChat UI
+- Anthropic Claude Opus 4.6 as primary model
+- Skills: 5 eligible, Plugins: 4 loaded
+
+### Not Yet Configured
+
+- **Memory Search** — Semantic recall is currently disabled. It requires an embedding provider to function. To enable it later, pick one of the following:
+
+  ```bash
+  # Option 1: Add an OpenAI or Gemini key for embeddings
+  npx openclaw auth add --provider openai
+  # or set OPENAI_API_KEY / GEMINI_API_KEY in ~/.openclaw/openclaw.json env block
+
+  # Option 2: Configure local embeddings
+  # Set agents.defaults.memorySearch.provider and local model path in config
+
+  # Option 3: Explicitly disable (suppress doctor warnings)
+  npx openclaw config set agents.defaults.memorySearch.enabled false
+
+  # Verify status
+  npx openclaw memory status --deep
+  ```
+
+- **Messaging Channels** — No channels (Telegram, Discord, Slack, etc.) are connected yet. Add bot tokens to `~/.openclaw/openclaw.json` as needed.
 
 ## License
 
