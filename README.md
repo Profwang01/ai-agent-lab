@@ -103,8 +103,9 @@ Last checked: 2026-02-17
 | Security | OK | No channel security warnings |
 | Skills | OK | 5 eligible, 44 missing requirements |
 | Plugins | OK | 4 loaded, 32 disabled, 0 errors |
+| LINE Channel | OK | Connected via ngrok webhook tunnel |
 | Memory Search | Not configured | No embedding provider set (see below) |
-| Messaging Channels | Not configured | No channel bot tokens added yet |
+| Other Channels | Not configured | Telegram, Discord, Slack, etc. not yet added |
 
 ### Memory Search (TODO)
 
@@ -127,9 +128,37 @@ npx openclaw config set agents.defaults.memorySearch.enabled false
 npx openclaw memory status --deep
 ```
 
-### Messaging Channels (TODO)
+### LINE Channel (Connected)
 
-No channels (Telegram, Discord, Slack, WhatsApp, etc.) are connected yet. Add bot tokens to `~/.openclaw/openclaw.json` as needed. WhatsApp uses QR code pairing and does not require a token.
+LINE Messaging API is connected. Setup requires:
+
+1. A [LINE Developers Console](https://developers.line.biz/console/) account with a Messaging API channel
+2. **Channel Access Token** and **Channel Secret** added to `~/.openclaw/openclaw.json`:
+
+   ```json5
+   {
+     channels: {
+       line: {
+         enabled: true,
+         channelAccessToken: "YOUR_TOKEN",
+         channelSecret: "YOUR_SECRET",
+         dmPolicy: "open",
+         webhookPath: "/line"
+       }
+     }
+   }
+   ```
+
+3. A public HTTPS URL for the webhook (e.g. via [ngrok](https://ngrok.com/)):
+
+   ```bash
+   ngrok http 18789
+   # Set the resulting URL + /line as Webhook URL in LINE Developers Console
+   ```
+
+### Other Messaging Channels (TODO)
+
+Other channels (Telegram, Discord, Slack, WhatsApp, etc.) are not yet connected. Add bot tokens to `~/.openclaw/openclaw.json` as needed. WhatsApp uses QR code pairing and does not require a token.
 
 ## License
 
